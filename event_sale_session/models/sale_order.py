@@ -14,6 +14,7 @@ from odoo import api, fields, models
 #         if any(self.order_line.filtered(lambda line: line.event_id)):
 #             return self.env['ir.actions.act_window'].with_context(default_sale_order_id=self.id).for_xml_id('event_sale', 'action_sale_order_event_registration')
 #         return res
+#
 
 
 class SaleOrderLine(models.Model):
