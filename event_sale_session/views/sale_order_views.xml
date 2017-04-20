@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
         <record id="view_sale_order_form_inherit_event" model="ir.ui.view">
              <field name="name">sale.order.form.inherit</field>
              <field name="model">sale.order</field>
              <field name="inherit_id" ref="sale.view_order_form" />
              <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']//form//field[@name='event_id']" position="after">
-                    <field name="session_id" domain="[('session_id', '=', session_id), ('event_id', '=', event_id), ('product_id','=',product_id), '|', ('seats_availability', '=', 'unlimited'), ('seats_available', '>', 0)]" attrs="{'invisible': [('event_ok', '=', False)], 'required': [('event_ok', '!=', False)]}"/>
+                    <field name="event_session_ids" invisible="1"/>
+                    <field name="event_session_id"
+                           domain="[('event_id', '=', event_id)]"
+                           attrs="{'invisible': [('event_session_ids', '=', False)], 'required': [('event_session_ids', '!=', False)]}"/>
                 </xpath>
              </field>
         </record>
