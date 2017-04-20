@@ -13,7 +13,7 @@
     'summary': 'Sessions sales in events',
     'depends': [
         'event_sale',
-        'event_session,'
+        'event_session',
     ],
     'data': [
         'security/ir.model.access.csv',
