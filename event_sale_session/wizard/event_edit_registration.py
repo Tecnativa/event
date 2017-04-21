@@ -41,12 +41,12 @@ class RegistrationEditor(models.TransientModel):
                     'email': reg.email,
                     'phone': reg.phone,
                     'sale_order_line_id': so_line.id,
-                    'session_id': so_line.event_session_id.id,
+                    'session_id': so_line.session_id.id,
                 })
             for count in range(int(so_line.product_uom_qty) - len(existing_registrations)):
                 attendee_list.append([0, 0, {
                     'event_id': so_line.event_id.id,
-                    'session_id': so_line.event_session_id.id,
+                    'session_id': so_line.session_id.id,
                     'event_ticket_id': so_line.event_ticket_id.id,
                     'sale_order_line_id': so_line.id,
                 }])
@@ -59,17 +59,16 @@ class RegistrationEditorLine(models.TransientModel):
     """Event Registration"""
     _inherit = "registration.editor.line"
 
-    event_session_id = fields.Many2one(
+    session_id = fields.Many2one(
         comodel_name='event.session',
-        string='Event',
-        required=True
+        string='Session',
     )
 
     @api.multi
     def get_registration_data(self):
         self.ensure_one()
-        res = super(RegistrationEditorLine, self)._get_registration_data(self)
+        res = super(RegistrationEditorLine, self).get_registration_data()
         res.update({
-                'session_id': self.event_session_id.id,
+                'session_id': self.sale_order_line_id.session_id.id,
              })
         return res
