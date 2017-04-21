@@ -18,6 +18,7 @@ class RegistrationEditor(models.TransientModel):
                 )
             vals.append((0, 0, dict(registration[2],
                                     session_id=so_line.session_id.id)),)
+        res['event_registration_ids'] = vals
         return res
 
 
