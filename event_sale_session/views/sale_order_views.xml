@@ -14,7 +14,17 @@
                            'invisible': [('event_sessions_count', '&lt;', 1)],
                            'required': [('event_sessions_count', '&gt;', 0)]
                            }"/>
+                    <field name="event_session_seats_available" invisible="0"/>
                 </xpath>
+                 <xpath expr="//sheet//div[@name='button_box']" position="inside">
+                     <button class="oe_stat_button"
+                             name="%(event_session.act_event_session_form)d"
+                             type="action"
+                             icon="fa-cubes"
+                             attrs="{'invisible': [('sale_session_count','&lt;','1')]}">
+                        <field string="Sessions" name="sale_session_count" widget="statinfo" />
+                     </button>
+                 </xpath>
              </field>
         </record>
 
