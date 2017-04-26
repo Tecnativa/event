@@ -12,19 +12,6 @@ class SaleOrder(models.Model):
         string='Attendees',
         readonly=True,
     )
-    sale_session_count = fields.Integer(
-        compute ="_compute_sale_sessions",
-        string ="Sessions in this sale order",
-        readonly ="True",
-    )
-
-    @api.multi
-    @api.depends("sale_session_count")
-    def _compute_sale_sessions(self):
-        self.sale_session_count = 0
-        for so_line in self.order_line:
-            if so_line.session_id:
-                self.sale_session_count += 1
 
 
 class SaleOrderLine(models.Model):
