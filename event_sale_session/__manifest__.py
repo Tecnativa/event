@@ -16,8 +16,9 @@
         'event_session',
     ],
     'data': [
-        'views/sale_order_views.xml',
         'security/ir.model.access.csv',
+        'views/sale_order_views.xml',
+        'views/event_session_view.xml',
         'wizard/event_edit_registration.xml',
     ],
     'installable': True,
