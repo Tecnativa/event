@@ -14,7 +14,9 @@
                        'invisible': [('event_sessions_count', '&lt;', 1)],
                        'required': [('event_sessions_count', '&gt;', 0)]
                        }"/>
-                <field name="event_session_seats_available" invisible="0"/>
+                <field name="event_session_seats_available"
+                       attrs="{'invisible': [('session_id','=',False)]}"
+                       />
             </xpath>
          </field>
     </record>
