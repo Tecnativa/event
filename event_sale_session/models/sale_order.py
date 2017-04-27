@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo import exceptions
 
 
 class SaleOrder(models.Model):
@@ -44,20 +45,23 @@ class SaleOrderLine(models.Model):
         super(SaleOrderLine, self).write(values)
         for line in self:
             if not line._session_seats_available():
-                raise ValidationError(_(
+                raise exceptions.ValidationError(_(
                     "There are sessions with no available seats!\n"
                     "Edit them so you can save the sale order"))
 
-    @api.onchange('product_uom_qty')
+    @api.onchange(
+        'product_uom_qty', 'event_id', 'session_id', 'event_ticket_id')
     def product_uom_change(self):
         super(SaleOrderLine, self).product_uom_change()
-        if not self._session_seats_available():
-            self.product_uom_qty = 1.0
-            raise UserError(_(
-                "Not enough seats. Change quanty or session"))
-
-    @api.multi
-    def _session_seats_available(self):
         if self.session_id:
-            if self.event_session_seats_available < self.product_uom_qty:
-                return False
+            if not self._session_seats_available():
+                raise exceptions.UserError(_(
+                    "Not enough seats. Change quanty or session"))
+
+    def _session_seats_available(self):
+        self.ensure_one()
+        if self.session_id and self.session_id.seats_availability == 'limited':
+            seats = self.event_session_seats_available - self.product_uom_qty
+            return True if seats > 0 else False
+        else:
+            return True
