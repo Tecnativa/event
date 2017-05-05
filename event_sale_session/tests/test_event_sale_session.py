@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0).
 
 from odoo.tests import common
-from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
 
 
@@ -32,7 +31,8 @@ class EventSaleSession(common.SavepointCase):
             'event_ticket_ids': [
                 (0, 0, {'product_id': cls.product.id, 'name': 'test1'}),
                 (0, 0, {'product_id': cls.product.id,
-                        'name': 'test2', 'price': 8.0,}),
+                        'name': 'test2', 'price': 8.0,
+                        }),
             ],
         })
         cls.session = cls.env['event.session'].create({

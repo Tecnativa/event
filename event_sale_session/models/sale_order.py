@@ -33,6 +33,11 @@ class SaleOrderLine(models.Model):
         string='Available Seats',
         readonly=True,
     )
+    event_session_seats_availability = fields.Selection(
+        related='session_id.seats_availability',
+        string='Seats Availavility',
+        readonly=True,
+    )
     registration_ids = fields.One2many(
         comodel_name='event.registration',
         inverse_name='sale_order_line_id',
