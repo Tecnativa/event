@@ -63,6 +63,12 @@ class SaleOrderLine(models.Model):
                 raise exceptions.UserError(_(
                     "Not enough seats. Change quanty or session"))
 
+    @api.multi
+    @api.onchange('event_id', 'session_id', 'event_ticket_id')
+    def event_id_change(self):
+        for so_line in self:
+            so_line.name = so_line._set_order_line_description()
+
     def _session_seats_available(self):
         self.ensure_one()
         if self.session_id and self.session_id.seats_availability == 'limited':
@@ -70,3 +76,10 @@ class SaleOrderLine(models.Model):
             return True if seats > 0 else False
         else:
             return True
+
+    def _set_order_line_description(self):
+        return '%s - %s - %s' % (
+            self.event_id.name,
+            self.session_id.name,
+            self.event_ticket_id.name
+        )
