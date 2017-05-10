@@ -50,6 +50,11 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: event_sale_session
+#: model:ir.model.fields,field_description:event_sale_session.field_sale_order_line_event_session_seats_availability
+msgid "Seats Availavility"
+msgstr "Disponibilidad de plazas"
+
+#. module: event_sale_session
 #: model:ir.model.fields,field_description:event_sale_session.field_registration_editor_line_session_id
 #: model:ir.model.fields,field_description:event_sale_session.field_sale_order_line_session_id
 msgid "Session"
