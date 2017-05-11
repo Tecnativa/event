@@ -78,8 +78,9 @@ class SaleOrderLine(models.Model):
             return True
 
     def _set_order_line_description(self):
-        return '%s - %s - %s' % (
-            self.event_id.name,
-            self.session_id.name,
-            self.event_ticket_id.name
-        )
+        description = self.event_id.name or self.product_id.name
+        if self.session_id:
+            description += '- %s' % self.session_id.name or ''
+        if self.event_ticket_id:
+            description += '- %s' % self.event_ticket_id.name or ''
+        return description
