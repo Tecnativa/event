@@ -11,7 +11,7 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_cancel(self):
         res = super(AccountInvoice, self).action_cancel()
-        if res:
+        if res and not self.env.context.get('is_merge', False):
             self.mapped(
                 'invoice_line_ids.sale_line_ids.registration_ids').filtered(
                 lambda x: x.state not in ['done', 'draft']
