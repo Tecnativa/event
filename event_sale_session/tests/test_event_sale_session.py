@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0).
 
 from odoo.tests import common
-from datetime import datetime, timedelta
 
 
 class EventSaleSession(common.SavepointCase):
@@ -23,8 +22,8 @@ class EventSaleSession(common.SavepointCase):
         })
         cls.event = cls.env['event.event'].create({
             'name': 'Test event',
-            'date_begin': datetime.today(),
-            'date_end': datetime.today() + timedelta(days=7),
+            'date_begin': '2017-05-26 20:00:00',
+            'date_end': '2017-05-30 22:00:00',
             'seats_availability': 'limited',
             'seats_max': '5',
             'seats_min': '1',
@@ -37,11 +36,9 @@ class EventSaleSession(common.SavepointCase):
         })
         cls.session = cls.env['event.session'].create({
             'name': 'Test session',
-            'date': datetime.today() + timedelta(days=1),
-            'date_end': datetime.today() + timedelta(days=1),
+            'date_begin': '2017-05-26 20:00:00',
+            'date_end': '2017-05-26 22:00:00',
             'event_id': cls.event.id,
-            'start_time': 20.0,
-            'end_time': 21.5,
             'seats_availability': cls.event.seats_availability,
             'seats_max': cls.event.seats_max,
             'seats_min': cls.event.seats_min,
@@ -54,7 +51,6 @@ class EventSaleSession(common.SavepointCase):
         """ sell event with session """
         sale = self.env['sale.order'].create({
             'partner_id': self.partner.id,
-            'date_order': datetime.today(),
             'order_line': [
                 (0, 0, {
                     'product_id': self.product.id,
