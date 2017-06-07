@@ -68,6 +68,8 @@ class SaleOrderLine(models.Model):
     def event_id_change(self):
         for so_line in self:
             so_line.name = so_line._set_order_line_description()
+            if self.event_sessions_count == 1:
+                so_line.session_id = self.event_id.session_ids[0]
 
     def _session_seats_available(self):
         self.ensure_one()
