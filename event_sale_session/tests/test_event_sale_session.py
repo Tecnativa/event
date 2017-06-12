@@ -25,7 +25,7 @@ class EventSaleSession(common.SavepointCase):
             'date_begin': '2017-05-26 20:00:00',
             'date_end': '2017-05-30 22:00:00',
             'seats_availability': 'limited',
-            'seats_max': '5',
+            'seats_max': '100',
             'seats_min': '1',
             'event_ticket_ids': [
                 (0, 0, {'product_id': cls.product.id, 'name': 'test1'}),
@@ -38,6 +38,15 @@ class EventSaleSession(common.SavepointCase):
             'name': 'Test session',
             'date_begin': '2017-05-26 20:00:00',
             'date_end': '2017-05-26 22:00:00',
+            'event_id': cls.event.id,
+            'seats_availability': cls.event.seats_availability,
+            'seats_max': cls.event.seats_max,
+            'seats_min': cls.event.seats_min,
+        })
+        cls.session_alt = cls.env['event.session'].create({
+            'name': 'Test session',
+            'date_begin': '2017-05-27 20:00:00',
+            'date_end': '2017-05-27 22:00:00',
             'event_id': cls.event.id,
             'seats_availability': cls.event.seats_availability,
             'seats_max': cls.event.seats_max,
@@ -57,11 +66,13 @@ class EventSaleSession(common.SavepointCase):
                     'event_id': self.event.id,
                     'session_id': self.session.id,
                     'product_uom_qty': 5.0,
-                    'event_ticket_id': self.event.event_ticket_ids[0].id,
-                }),
-            ]
-        })
+                    'event_ticket_id': self.event.event_ticket_ids[0].id,}),
+            ]})
+        self.assertEqual(self.session.unconfirmed_qty, 5)
+        self.assertEqual(self.event.unconfirmed_qty, 5)
         sale.action_confirm()
+        self.assertEqual(self.session.unconfirmed_qty, 0)
+        self.assertEqual(self.event.unconfirmed_qty, 0)
         regs = self.env['event.registration'].search([
             ('sale_order_id', '=', sale.id)
         ])

@@ -13,7 +13,17 @@ class SaleOrder(models.Model):
         string='Attendees',
         readonly=True,
     )
+    event_ids = fields.Many2many(
+        comodel_name="event.event",
+        string='Event',
+        compute='_compute_event_ids',
+        readonly=True,
+    )
 
+    @api.multi
+    def _compute_event_ids(self):
+        for sale in self:
+            sale.event_ids = sale.order_line.mapped('event_id')
 
 class SaleOrderLine(models.Model):
 

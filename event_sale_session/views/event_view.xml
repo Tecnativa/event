@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Event session action form stat button -->
+    <record id="act_event_session_unconfirmed_qty"
+            model="ir.actions.act_window">
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="name">Orders</field>
+        <field name="context">{'search_default_event_ids': [active_id]}</field>
+        <field name="domain">[('state','in',('draft','sent'))]</field>
+    </record>
+
+    <record id="view_event_form" model="ir.ui.view">
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(act_event_session_unconfirmed_qty)d"
+                    type="action"
+                    class="oe_stat_button"
+                    icon="fa-eye-slash"
+                    help="Unconfirmed orders seats">
+                    <field name="unconfirmed_qty" widget="statinfo"
+                           string="Unconfirmed order seats"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

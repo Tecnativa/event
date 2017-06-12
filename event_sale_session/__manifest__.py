@@ -18,6 +18,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
+        'views/event_view.xml',
         'views/event_session_view.xml',
         'wizard/event_edit_registration.xml',
     ],
