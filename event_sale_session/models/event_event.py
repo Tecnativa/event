@@ -25,3 +25,14 @@ class EventSession(models.Model):
             event.unconfirmed_qty = int(sum(event.order_line_ids.filtered(
                 lambda x: x.order_id.state in ('draft', 'sent')
             ).mapped('product_uom_qty')))
+
+    @api.multi
+    def button_open_unconfirmed_event_order(self):
+        action = self.env.ref('sale.action_quotations').read()[0]
+        sales = self.env[
+            'sale.order.line'].search(
+            [('event_id','=',self.id)]).mapped('order_id').ids
+        action['domain'] = [('id', 'in' , sales),
+                            ('state','in',('draft','sent'))]
+        action['context'] = {}
+        return action

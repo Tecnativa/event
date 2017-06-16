@@ -21,6 +21,7 @@ class SaleOrder(models.Model):
     )
 
     @api.multi
+    @api.depends('order_line.event_id')
     def _compute_event_ids(self):
         for sale in self:
             sale.event_ids = sale.order_line.mapped('event_id')
