@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 # © 2014 Tecnativa S.L. - Pedro M. Baeza
 # © 2015 Tecnativa S.L. - Javier Iniesta
 # © 2016 Tecnativa S.L. - Antonio Espinosa
