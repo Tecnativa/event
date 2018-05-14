@@ -22,8 +22,8 @@
                     type="action"
                     class="oe_stat_button oe_inline"
                     help="Count of events with confirmed registrations."
-                    icon="fa-futbol-o">
-                <field name="event_count"
+                    icon="fa-id-card">
+                <field name="registration_count"
                        widget="statinfo"/>
             </button>
         </div>

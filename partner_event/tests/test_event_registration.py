@@ -1,4 +1,3 @@
-
 # © 2014 Tecnativa S.L. - Pedro M. Baeza
 # © 2015 Tecnativa S.L. - Javier Iniesta
 # © 2016 Tecnativa S.L. - Antonio Espinosa
@@ -47,17 +46,17 @@ class TestEventRegistration(common.SavepointCase):
         self.assertEqual(partner_02.email, self.registration_02.email)
         self.assertEqual(partner_02.phone, self.registration_02.phone)
 
-    def test_count_events(self):
+    def test_count_registrations(self):
         event_1 = self.event_0.copy()
-        self.assertEqual(self.partner_01.event_count, 0)
+        self.assertEqual(self.partner_01.registration_count, 0)
         self.registration_01.state = "open"
         self.partner_01.invalidate_cache()
-        self.assertEqual(self.partner_01.event_count, 1)
+        self.assertEqual(self.partner_01.registration_count, 1)
         self.registration_02.state = "done"
         self.registration_02.attendee_partner_id = self.partner_01
         self.registration_02.event_id = event_1
         self.partner_01.invalidate_cache()
-        self.assertEqual(self.partner_01.event_count, 2)
+        self.assertEqual(self.partner_01.registration_count, 2)
 
     def test_button_register(self):
         event_1 = self.event_0.copy()
