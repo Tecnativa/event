@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Tecnativa - Sergio Teruel
 # Copyright 2016 Tecnativa - Vicent Cubells
 # Copyright 2018 Tecnativa - Pedro M. Baeza
+# Copyright 2019 Tecnativa - Cristina Martin R.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Event Email Reminder",
     "summary": "Send an email before an event start",
-    "version": "9.0.1.1.1",
+    "version": "12.0.1.0.0",
     "category": "Event Management",
-    'website': 'http://www.tecnativa.com',
+    'website': 'https://github.com/OCA/event/',
     'author': 'Tecnativa, '
               'Odoo Community Association (OCA)',
     "license": "AGPL-3",
