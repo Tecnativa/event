@@ -77,3 +77,13 @@ class EventRegistration(models.Model):
                     _('You can not add quantities if you not active the'
                       ' option "Allow multiple attendees per registration"'
                       ' in event'))
+
+    @api.model
+    def _prepare_attendee_values(self, registration):
+        res = super()._prepare_attendee_values(registration)
+        # Passed fields are not taken into account if a default is set.
+        # We can force this with a specific context
+        qty = self.env.context.get("default_qty")
+        if qty:
+            res.update({"qty": qty})
+        return res
