@@ -35,3 +35,18 @@ class EventSession(models.Model):
                     vals["seats_reserved"] + vals["seats_used"]
                 )
             session.update(vals)
+
+    @api.depends("registration_ids.qty")
+    def _compute_seats_unconfirmed(self):
+        for session in self:
+            if not session.event_id.registration_multi_qty:
+                return super()._compute_seats_unconfirmed()
+            registrations = self.env["event.registration"].read_group(
+                [
+                    ("session_id", "=", session.id),
+                    ("state", "=", "draft"),
+                ],
+                ["qty:sum"],
+                [],
+            )
+            session.seats_unconfirmed = registrations[0]["qty"] if registrations else 0
